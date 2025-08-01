@@ -1,3 +1,26 @@
+/* Scrollbar track (background) */
+::-webkit-scrollbar {
+  width: 12px;           /* width of vertical scrollbar */
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: #000000;   /* light grey track */
+  border-radius: 8px;
+}
+
+/* Scrollbar thumb (the draggable handle) */
+::-webkit-scrollbar-thumb {
+  background-color: #65713b;  /* dark greenish */
+  border-radius: 8px;
+  border: 3px solid #000000; /* padding around thumb */
+}
+
+/* Scrollbar thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #98a55d;
+}
+
 /* Hero Section */
 .hero {
   position: relative;
