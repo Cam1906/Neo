@@ -9,28 +9,6 @@ body.page-transition.loaded {
   transform: scale(1);
 }
 
-/* Scrollbar track (background) */
-::-webkit-scrollbar {
-  width: 12px;           /* width of vertical scrollbar */
-}
-
-/* Scrollbar track */
-::-webkit-scrollbar-track {
-  background: #000000;   /* light grey track */
-  border-radius: 8px;
-}
-
-/* Scrollbar thumb (the draggable handle) */
-::-webkit-scrollbar-thumb {
-  background-color: #1e3b31;  /* dark greenish */
-  border-radius: 8px;
-  border: 3px solid #000000; /* padding around thumb */
-}
-
-/* Scrollbar thumb hover */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #055030;
-}
 
 
 html, body {
