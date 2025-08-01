@@ -31,10 +31,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100px; /* stronger fade */
+  height: 100vh; /* stronger fade */
   background: linear-gradient(to bottom, transparent, #121212); /* match next section bg */
   pointer-events: none;
-  z-index: 1;
+  z-index: -99;
 }
 
 .title {
