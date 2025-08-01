@@ -1,0 +1,298 @@
+body.page-transition {
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+body.page-transition.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scrollbar track (background) */
+::-webkit-scrollbar {
+  width: 12px;           /* width of vertical scrollbar */
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: #000000;   /* light grey track */
+  border-radius: 8px;
+}
+
+/* Scrollbar thumb (the draggable handle) */
+::-webkit-scrollbar-thumb {
+  background-color: #1e3b31;  /* dark greenish */
+  border-radius: 8px;
+  border: 3px solid #000000; /* padding around thumb */
+}
+
+/* Scrollbar thumb hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #055030;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  /* Only add overflow: hidden if you're using a fixed header setup */
+}
+
+.snap-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-section {
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.snap-section.card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+:root {
+  --bg: #121212;
+  --primary: rgba(59, 130, 246, 1);
+  --primary-light: #3f6cff;   /* light mint */
+  --accent: #00a3fb;          /* soft purple */
+  --text: #e0e0e0;
+  --subtext: #9ca3af;
+  --card-bg: #1f1f1f;
+  --shadow-glow: rgba(59, 130, 246, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+  line-height: 1.6;
+}
+
+h1, h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+h1.title {
+  position: relative;
+  display: inline-block;
+  color: var(--primary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+h1.title:hover {
+  --glow-opacity: 0.7;
+}
+
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.header-buttons {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.menu-btn,
+.login-btn,
+.signup-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.menu-btn:hover,
+.login-btn:hover,
+.signup-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+
+/* Hero section layout grid */
+
+
+@keyframes driftGlow {
+  0% {
+    --x: 50%;
+    --y: 50%;
+  }
+  50% {
+    --x: 60%;
+    --y: 45%;
+  }
+  100% {
+    --x: 50%;
+    --y: 50%;
+  }
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+canvas#bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+}
+
+.hero-text {
+  text-align: left;
+}
+
+.hero-text h1 {
+  font-size: 4rem;
+  color: #fff;
+  animation: fadeSlideLeft 1.2s ease forwards;
+}
+
+.subhead {
+  font-size: 1.5rem;
+  color: var(--subtext);
+  margin-top: 1rem;
+  animation: fadeSlideLeft 1.6s ease forwards;
+  max-width: 480px;
+}
+
+.menu-container {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+
+  max-width: 120px; /* initial button width */
+  transition: max-width 1s ease;
+  white-space: nowrap;
+}
+
+.menu-container.open {
+  max-width: 1000px; /* large enough to fit menu */
+}
+
+.menu-btn {
+  flex-shrink: 0;
+  background: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  outline-offset: 2px;
+  user-select: none;
+}
+
+.menu {
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-20px); /* start slightly shifted right */
+  transition: opacity 0.3s ease 0.3s, transform 0.3s ease 0.3s;
+  margin-left: 1rem;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  user-select: none;
+}
+
+.menu-container.open .menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0); /* slide in to place */
+  transition-delay: 0.4s; /* after container expansion */
+}
+
+
+.menu ul {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+  display: inline-block; /* ensure transform works nicely */
+}
+
+.menu li a:hover,
+.menu li a:focus {
+  transform: scale(1.2);
+  outline: none;
+  background-color: transparent;
+}
+
+footer {
+  background: var(--card-bg);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+  color: var(--subtext);
+  user-select: none;
+}
