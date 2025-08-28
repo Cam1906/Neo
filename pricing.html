@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neo - Pricing Plans</title>
+  <style>
+    /* --- your CSS unchanged --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #ffffff;
+      background: #0a0a0a;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      opacity: 0.8;
+    }
+    .nav-links a:hover {
+      color: #00ff88;
+      opacity: 1;
+    }
+    .nav-links a.active {
+      color: #00ff88;
+      opacity: 1;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+    .pricing-hero {
+      padding: 140px 0 80px;
+      text-align: center;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover;
+      pointer-events: none;
+    }
+    .pricing-hero h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+    .pricing-hero p {
+      font-size: 1.2rem;
+      color: #aaaaaa;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+.billing-toggle {
+  display: flex;
+  justify-content: center; /* centres the toggle-wrapper */
+  position: relative;
+}
+
+.toggle-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.savings-badge {
+  position: absolute;
+  top: 12px;       /* tweak as needed */
+  right: -100px;     /* tweak as needed */
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+.savings-badge.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+    .toggle-container {
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50px;
+      padding: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    .toggle-option {
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      color: #888888;
+      user-select: none;
+      min-width: 80px;
+      text-align: center;
+    }
+    .toggle-option.active {
+      color: #ffffff;
+    }
+    .toggle-option:hover {
+      color: #cccccc;
+    }
+    .toggle-option.active:hover {
+      color: #ffffff;
+    }
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      height: calc(100% - 8px);
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      border-radius: 50px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+      box-shadow: 0 2px 8px rgba(0, 255, 136, 0.3);
+    }
+    .toggle-slider.yearly {
+      transform: translateX(100%);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+      padding-bottom: 80px;
+    }
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      border-radius: 25px;
+      padding: 3rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.02), transparent);
+      transition: left 0.6s ease;
+    }
+    .pricing-card:hover::before {
+      left: 100%;
+    }
+    .pricing-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(0, 255, 136, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
+    }
+    .pricing-card.featured {
+      border-color: rgba(0, 255, 136, 0.3);
+      background: rgba(0, 255, 136, 0.02);
+      transform: scale(1.05);
+    }
+    .pricing-card.featured::after {
+      content: 'Most Popular';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      color: #ffffff;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .pricing-card.featured:hover {
+      transform: translateY(-10px) scale(1.07);
+    }
+    .plan-header {
+      margin-bottom: 2rem;
+    }
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+    .plan-description {
+      color: #aaaaaa;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .price-container {
+      margin-bottom: 2.5rem;
+    }
+    .price {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .price-period {
+      font-size: 1rem;
+      color: #888888;
+      margin-left: 0.5rem;
+    }
+    .original-price {
+      font-size: 1.2rem;
+      color: #666666;
+      text-decoration: line-through;
+      margin-left: 1rem;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+    }
+    .original-price.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .features-list {
+      list-style: none;
+      margin-bottom: 2.5rem;
+    }
+    .features-list li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      color: #cccccc;
+      font-size: 0.95rem;
+    }
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+    .cta-button {
+      width: 100%;
+      background: linear-gradient(135deg, #00ff88, #00cc6a);
+      color: #ffffff;
+      padding: 18px;
+      border: none;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+    .cta-button:hover::before {
+      left: 100%;
+    }
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3);
+    }
+    .cta-button.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .cta-button.secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 255, 136, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .faq-section {
+      padding: 80px 0;
+      background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .faq-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+      letter-spacing: -1px;
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+    }
+    .faq-item {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .faq-question {
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    .faq-answer {
+      color: #aaaaaa;
+      line-height: 1.6;
+    }
+    /* Responsive & extras unchanged (omitted for brevity) */
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  
+  <header>
+    <nav class="container">
+      <a href="#" class="logo">NEO</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing" class="active">Pricing</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="pricing-hero">
+    <div class="container">
+      <h1>Simple, Transparent Pricing</h1>
+      <p>Choose the perfect plan for your fitness journey. Start free, upgrade anytime. No hidden fees, no commitments.</p>
+        <div class="billing-toggle">
+        <div class="toggle-wrapper">
+            <div class="toggle-container">
+            <div class="toggle-slider" id="toggleSlider"></div>
+            <div class="toggle-option active" data-period="monthly">Monthly</div>
+            <div class="toggle-option" data-period="yearly">Yearly</div>
+            </div>
+            <div class="savings-badge" id="savingsBadge">Save 30%</div>
+        </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="pricing-card">
+        <div class="plan-header">
+          <h3 class="plan-name">Starter</h3>
+          <p class="plan-description">Perfect for beginners starting their fitness journey</p>
+        </div>
+        <div class="price-container">
+          <span class="price" data-monthly="Free" data-yearly="Free">Free</span>
+          <span class="price-period">forever</span>
+        </div>
+        <ul class="features-list">
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Basic workout tracking</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>3 pre-built workout plans</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Basic progress tracking</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Community access</li>
+        </ul>
+        <a href="#" class="cta-button secondary">Get Started Free</a>
+      </div>
+
+      <!-- Pro -->
+      <div class="pricing-card featured">
+        <div class="plan-header">
+          <h3 class="plan-name">Pro</h3>
+          <p class="plan-description">Advanced features for serious fitness enthusiasts</p>
+        </div>
+        <div class="price-container">
+          <span class="price" data-monthly="$9.99" data-yearly="$83.99">$9.99</span>
+          <span class="price-period">/month</span>
+          <span class="original-price" data-yearly="$119.88"></span>
+        </div>
+        <ul class="features-list">
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Unlimited workout plans</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Custom workout creation</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Progress analytics</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Priority support</li>
+        </ul>
+        <a href="#" class="cta-button">Start Free Trial</a>
+      </div>
+
+      <!-- Elite -->
+      <div class="pricing-card">
+        <div class="plan-header">
+          <h3 class="plan-name">Elite</h3>
+          <p class="plan-description">All-in-one experience for professionals & trainers</p>
+        </div>
+        <div class="price-container">
+          <span class="price" data-monthly="$19.99" data-yearly="$167.99">$19.99</span>
+          <span class="price-period">/month</span>
+          <span class="original-price" data-yearly="$239.88"></span>
+        </div>
+        <ul class="features-list">
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>All Pro features</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Client management tools</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Advanced analytics</li>
+          <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Exclusive content</li>
+        </ul>
+        <a href="#" class="cta-button">Start Free Trial</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+        <div class="container">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I switch plans anytime?</h3>
+                    <p class="faq-answer">Yes! You can upgrade, downgrade, or cancel your subscription at any time. Changes take effect at your next billing cycle.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Is there a free trial?</h3>
+                    <p class="faq-answer">Absolutely! Pro and Elite plans come with a 7-day free trial. No credit card required to start.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What devices are supported?</h3>
+                    <p class="faq-answer">Neo works on iOS, Android, Apple Watch, and syncs with popular fitness trackers like Fitbit and Garmin.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Is my data secure?</h3>
+                    <p class="faq-answer">Your privacy is our priority. All data is encrypted and stored securely. We never share your personal information.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Do you offer refunds?</h3>
+                    <p class="faq-answer">Yes, we offer a 30-day money-back guarantee if you're not completely satisfied with your subscription.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How does the coaching work?</h3>
+                    <p class="faq-answer">Elite members get paired with certified fitness coaches for weekly 1-on-1 video sessions and ongoing chat support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+  <script>
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    const toggleSlider = document.getElementById('toggleSlider');
+    const savingsBadge = document.getElementById('savingsBadge');
+    const prices = document.querySelectorAll('.price');
+
+    function updatePrices(period) {
+      prices.forEach(price => {
+        const monthlyPrice = price.dataset.monthly;
+        const yearlyPrice = price.dataset.yearly;
+        const originalPrice = price.parentElement.querySelector('.original-price');
+
+        price.style.transition = 'all 0.3s ease';
+        price.style.transform = 'scale(0.9)';
+        price.style.opacity = '0.5';
+
+        setTimeout(() => {
+          if (period === 'yearly') {
+            price.textContent = yearlyPrice;
+            if (originalPrice && originalPrice.dataset.yearly) {
+              originalPrice.textContent = originalPrice.dataset.yearly;
+              originalPrice.classList.add('show');
+            }
+          } else {
+            price.textContent = monthlyPrice;
+            if (originalPrice) {
+              originalPrice.classList.remove('show');
+            }
+          }
+
+          price.style.transform = 'scale(1)';
+          price.style.opacity = '1';
+        }, 150);
+      });
+
+      const pricePeriods = document.querySelectorAll('.price-period');
+      pricePeriods.forEach(periodEl => {
+        if (periodEl.textContent !== 'forever') {
+          periodEl.textContent = period === 'yearly' ? '/year' : '/month';
+        }
+      });
+    }
+
+    toggleOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        toggleOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+
+        if (option.dataset.period === 'yearly') {
+          toggleSlider.classList.add('yearly');
+          savingsBadge.classList.add('show');
+        } else {
+          toggleSlider.classList.remove('yearly');
+          savingsBadge.classList.remove('show');
+        }
+
+        updatePrices(option.dataset.period);
+      });
+    });
+  </script>
+</body>
+</html>
