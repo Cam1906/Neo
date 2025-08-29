@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo - Features</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #0a0a0a;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+            opacity: 1;
+        }
+
+        .nav-links a.active {
+            color: #00ff88;
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: #ffffff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .mobile-nav li {
+            margin: 10px 0;
+        }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            padding: 10px 0;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .features-hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover;
+            pointer-events: none;
+        }
+
+        .features-hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .features-hero p {
+            font-size: 1.2rem;
+            color: #aaaaaa;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .feature-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-nav-item {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #888888;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .feature-nav-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #cccccc;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-nav-item.active {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #ffffff;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        }
+
+        .feature-section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .feature-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-section:first-of-type {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .feature-content.reverse {
+            direction: rtl;
+        }
+
+        .feature-content.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-text h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .feature-text p {
+            font-size: 1.1rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .feature-highlights {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(0, 255, 136, 0.2);
+            transform: translateX(5px);
+        }
+
+        .highlight-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
+        }
+
+        .highlight-text {
+            flex: 1;
+        }
+
+        .highlight-text h4 {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .highlight-text p {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .feature-visual {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.02), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .feature-visual:hover::before {
+            left: 100%;
+        }
+
+        .visual-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #00ff88;
+            opacity: 0.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 136, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 204, 106, 0.05));
+            border-radius: 25px;
+            padding: 4rem 3rem;
+            text-align: center;
+            margin: 4rem 0;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        .cta-section h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #cccccc;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #ffffff;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.02;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix in="SourceGraphic" type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.4"/></svg>');
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00ff88;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 2rem;
+            text-align: center;
+            color: #666666;
+        }
+
+        /* Mobile First - Small screens */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .features-hero {
+                padding: 120px 0 60px;
+            }
+            
+            .features-hero h1 {
+                font-size: 2.5rem;
+                letter-spacing: -1px;
+            }
+            
+            .features-hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .feature-nav {
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .feature-nav-item {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .feature-section {
+                padding: 60px 0;
+            }
+            
+            .feature-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .feature-text h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .feature-text p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .feature-visual {
+                padding: 2rem;
+                aspect-ratio: 1.2;
+            }
+            
+            .visual-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .cta-section {
+                padding: 2rem 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .cta-section h3 {
+                font-size: 1.5rem;
+            }
+            
+            .cta-section p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Tablet - Medium screens */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .features-hero h1 {
+                font-size: 3rem;
+            }
+            
+            .feature-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .feature-text h2 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .feature-nav-item:hover,
+            .highlight-item:hover,
+            .stat-card:hover,
+            .cta-button:hover {
+                transform: none;
+            }
+            
+            .feature-nav-item:active {
+                transform: scale(0.95);
+            }
+            
+            .cta-button:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">NEO</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features" class="active">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="mobile-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#features" class="active">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="features-hero">
+        <div class="container">
+            <h1>All-In-One Wellness</h1>
+            <p>Five powerful features working together to transform your health and fitness journey. Everything you need, beautifully integrated.</p>
+            
+            <div class="feature-nav">
+                <a href="#" class="feature-nav-item active" data-feature="workouts">Workouts</a>
+                <a href="#" class="feature-nav-item" data-feature="nutrition">Nutrition</a>
+                <a href="#" class="feature-nav-item" data-feature="habits">Habits</a>
+                <a href="#" class="feature-nav-item" data-feature="mindfulness">Mindfulness</a>
+                <a href="#" class="feature-nav-item" data-feature="community">Community</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Workouts Section -->
+        <section class="feature-section active" id="workouts">
+            <div class="feature-content">
+                <div class="feature-text">
+                    <h2>Smart Workouts</h2>
+                    <p>AI-powered training that adapts to your progress, preferences, and goals. From beginner-friendly routines to advanced programs, Neo creates the perfect workout for every fitness level.</p>
+                    
+                    <div class="feature-highlights">
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>AI Personal Trainer</h4>
+                                <p>Intelligent workout generation based on your goals and progress</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>Form Analysis</h4>
+                                <p>Real-time feedback on your exercise form and technique</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>Adaptive Scheduling</h4>
+                                <p>Workouts that fit your schedule and energy levels</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-visual">
+                    <div class="visual-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M6 10v8h4v-8M14 6v12h4V6M10 4v16h4V4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Exercises</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Workout Plans</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">AI</div>
+                    <div class="stat-label">Powered</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Section -->
+        <section class="feature-section active" id="nutrition">
+            <div class="feature-content reverse">
+                <div class="feature-text">
+                    <h2>Smart Nutrition</h2>
+                    <p>Effortless meal tracking with intelligent food recognition, macro optimization, and personalized meal planning. Fuel your body with precision and ease.</p>
+                    
+                    <div class="feature-highlights">
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="8 12l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>Photo Food Logging</h4>
+                                <p>Snap a photo and let AI identify and log your meals instantly</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>Macro Optimization</h4>
+                                <p>Personalized macro targets based on your goals and activity</p>
+                            </div>
+                        </div>
+                        <div class="highlight-item loading">
+                            <div class="highlight-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </div>
+                            <div class="highlight-text">
+                                <h4>Meal Planning</h4>
+                                <p>AI-generated meal plans that match your taste and goals</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-visual">
+                    <div class="visual-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M2 12c0 3.6 2.4 6.6 6 7.7V19c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v-.3c3.6-1.1 6-4.1 6-7.7 0-4.4-3.6-8-8-8s-8 3.6-8 8z"/>
+                            <path d="M8 7h8"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Foods Database</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Recognition Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2k+</div>
+                    <div class="stat-label">Recipes</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Habits Section -->
+<section class="feature-section active" id="habits">
+    <div class="feature-content">
+        <div class="feature-text">
+            <h2>Smart Habits</h2>
+            <p>AI-driven habit formation that learns your patterns, motivations, and lifestyle. Build lasting positive changes with personalized strategies that stick, from simple daily routines to transformative life habits.</p>
+            
+            <div class="feature-highlights">
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M9 11H1a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2zM23 11h-8a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Habit Stacking</h4>
+                        <p>Intelligent linking of new habits to existing routines for better success</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Smart Reminders</h4>
+                        <p>Context-aware notifications that adapt to your schedule and preferences</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Behavioral Insights</h4>
+                        <p>Deep analysis of your patterns to optimize habit formation strategies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="feature-visual">
+            <div class="visual-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22,4 12,14.01 9,11.01"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">21</div>
+            <div class="stat-label">Day Formation</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">90%</div>
+            <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">AI</div>
+            <div class="stat-label">Coaching</div>
+        </div>
+    </div>
+</section>
+
+<!-- Mindfulness Section -->
+<section class="feature-section active" id="mindfulness">
+    <div class="feature-content">
+        <div class="feature-text">
+            <h2>Mindful Moments</h2>
+            <p>Personalized mindfulness experiences that fit seamlessly into your day. From quick breathing exercises to deep meditation sessions, Neo creates peaceful moments tailored to your stress levels and schedule.</p>
+            
+            <div class="feature-highlights">
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M3 12c0-1.2.6-2.4 1.4-3.2L12 1l7.6 7.8c.8.8 1.4 2 1.4 3.2 0 2.2-1.8 4-4 4H7c-2.2 0-4-1.8-4-4z"/>
+                            <path d="M12 16v6"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Guided Meditations</h4>
+                        <p>AI-curated sessions based on your mood and available time</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                            <path d="M2 12h20"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Stress Monitoring</h4>
+                        <p>Real-time stress detection with personalized intervention suggestions</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Sleep Optimization</h4>
+                        <p>Evening routines and soundscapes for better rest and recovery</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="feature-visual">
+            <div class="visual-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 1v6m0 6v6"/>
+                    <path d="M1 12h6m6 0h6"/>
+                    <path d="M4.22 4.22l4.24 4.24m7.07 0l4.24-4.24"/>
+                    <path d="M4.22 19.78l4.24-4.24m7.07 0l4.24 4.24"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">100+</div>
+            <div class="stat-label">Meditations</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Support</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">Zen</div>
+            <div class="stat-label">Mode</div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Section -->
+<section class="feature-section active" id="community">
+    <div class="feature-content">
+        <div class="feature-text">
+            <h2>Connected Community</h2>
+            <p>Join a supportive network of like-minded individuals on similar wellness journeys. Share achievements, find accountability partners, and celebrate milestones together in a positive, encouraging environment.</p>
+            
+            <div class="feature-highlights">
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Smart Matching</h4>
+                        <p>AI connects you with compatible accountability partners and groups</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Achievement Sharing</h4>
+                        <p>Celebrate wins and milestones with your supportive community</p>
+                    </div>
+                </div>
+                <div class="highlight-item loading">
+                    <div class="highlight-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <path d="M13 8H7"/>
+                            <path d="M17 12H7"/>
+                        </svg>
+                    </div>
+                    <div class="highlight-text">
+                        <h4>Group Challenges</h4>
+                        <p>Participate in team goals and friendly competitions for motivation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="feature-visual">
+            <div class="visual-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">10K+</div>
+            <div class="stat-label">Members</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Groups</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">Global</div>
+            <div class="stat-label">Network</div>
+        </div>
+    </div>
+</section>
