@@ -15,9 +15,22 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             line-height: 1.6;
             color: #ffffff;
-            background: #0a0a0a;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; /* stick to the viewport */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover no-repeat;
+            pointer-events: none;
+            z-index: -1; /* push it behind content */
         }
 
         .container {
@@ -146,22 +159,12 @@
         }
 
         .features-hero {
+            min-height: 100vh;
             padding: 140px 0 80px;
             text-align: center;
             background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
             position: relative;
             overflow: hidden;
-        }
-
-        .features-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover;
-            pointer-events: none;
         }
 
         .features-hero h1 {
@@ -184,13 +187,13 @@
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 4rem;
+            margin-top: 5rem;
             flex-wrap: wrap;
         }
 
         .feature-nav-item {
             padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50px;
             color: #888888;
@@ -216,7 +219,7 @@
         }
 
         .feature-section {
-            padding: 80px 0;
+            padding: 65px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             opacity: 0;
             transform: translateY(30px);
@@ -274,7 +277,7 @@
             align-items: center;
             gap: 1rem;
             padding: 1rem;
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.3s ease;
@@ -315,8 +318,12 @@
             line-height: 1.4;
         }
 
+        .phone-frame {
+            height: 100%;
+        }
+
         .feature-visual {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             padding: 3rem;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -335,7 +342,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.02), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.05), transparent);
             transition: left 0.8s ease;
         }
 
@@ -366,7 +373,7 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 2rem;
             text-align: center;
@@ -675,11 +682,11 @@
         <nav class="container">
             <a href="#" class="logo">NEO</a>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features" class="active">Features</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#features" class="active">Features</a></li>
+                    <li><a href="ourMission.html">Our Mission</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="mobile-menu-btn">
                 <span></span>
@@ -690,9 +697,9 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#features" class="active">Features</a></li>
+                    <li><a href="ourMission.html">Our Mission</a></li>
                     <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="#download">Download</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </nav>
@@ -758,12 +765,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="feature-visual">
-                    <div class="visual-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M6 10v8h4v-8M14 6v12h4V6M10 4v16h4V4"/>
-                        </svg>
-                    </div>
+                <div class="feature-visual">          
+                    <img src="images/Workouts - iPhone.png" alt="iPhone Frame" class="phone-frame">
                 </div>
             </div>
             
@@ -828,12 +831,7 @@
                     </div>
                 </div>
                 <div class="feature-visual">
-                    <div class="visual-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M2 12c0 3.6 2.4 6.6 6 7.7V19c0-.6.4-1 1-1h2c.6 0 1 .4 1 1v-.3c3.6-1.1 6-4.1 6-7.7 0-4.4-3.6-8-8-8s-8 3.6-8 8z"/>
-                            <path d="M8 7h8"/>
-                        </svg>
-                    </div>
+                    <img src="images/Nutrition - iPhone.png" alt="iPhone Frame" class="phone-frame">
                 </div>
             </div>
             
@@ -901,12 +899,7 @@
             </div>
         </div>
         <div class="feature-visual">
-            <div class="visual-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22,4 12,14.01 9,11.01"/>
-                </svg>
-            </div>
+            <img src="images/Habits - iPhone.png" alt="iPhone Frame" class="phone-frame">
         </div>
     </div>
     
@@ -929,6 +922,9 @@
 <!-- Mindfulness Section -->
 <section class="feature-section active" id="mindfulness">
     <div class="feature-content">
+        <div class="feature-visual">
+            <img src="images/Mindfulness - iPhone.png" alt="iPhone Frame" class="phone-frame">
+        </div>
         <div class="feature-text">
             <h2>Mindful Moments</h2>
             <p>Personalized mindfulness experiences that fit seamlessly into your day. From quick breathing exercises to deep meditation sessions, Neo creates peaceful moments tailored to your stress levels and schedule.</p>
@@ -970,17 +966,6 @@
                         <p>Evening routines and soundscapes for better rest and recovery</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="feature-visual">
-            <div class="visual-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M12 1v6m0 6v6"/>
-                    <path d="M1 12h6m6 0h6"/>
-                    <path d="M4.22 4.22l4.24 4.24m7.07 0l4.24-4.24"/>
-                    <path d="M4.22 19.78l4.24-4.24m7.07 0l4.24 4.24"/>
-                </svg>
             </div>
         </div>
     </div>
@@ -1050,14 +1035,7 @@
             </div>
         </div>
         <div class="feature-visual">
-            <div class="visual-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-            </div>
+            <img src="images/Community - iPhone.png" alt="iPhone Frame" class="phone-frame">
         </div>
     </div>
     
@@ -1076,3 +1054,27 @@
         </div>
     </div>
 </section>
+
+<script>
+  // Select all feature nav buttons
+  const featureButtons = document.querySelectorAll('.feature-nav-item');
+
+  featureButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default anchor behaviour
+
+      // Remove active class from all buttons
+      featureButtons.forEach(btn => btn.classList.remove('active'));
+
+      // Add active class to the clicked button
+      button.classList.add('active');
+
+      // Scroll to the corresponding section
+      const feature = button.dataset.feature;
+      const section = document.getElementById(feature);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
