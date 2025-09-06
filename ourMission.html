@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Mission - Neo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; /* stick to the viewport */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover no-repeat;
+            pointer-events: none;
+            z-index: -1; /* push it behind content */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .nav-links a.active {
+            color: #00ff88;
+            opacity: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            color: #00ff88;
+            opacity: 1;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hero-section {
+            min-height: 60vh;
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero-content .slogan {
+            font-size: 1.2rem;
+            color: #888888;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-content p{
+            font-size: 1.2rem;
+            color: #aaaaaa;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .user-counter-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 255, 136, 0.02) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            max-width: 300px;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-counter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, #ffffff, #00cc6a, transparent);
+            animation: borderFlow 3s linear infinite;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .counter-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            transition: all 0.5s ease;
+        }
+
+        .counter-number.animate {
+            transform: scale(1.05);
+        }
+
+        /* Pulse animation for live updates */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-left: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 60%; left: 20%; animation-delay: 2s; background: rgba(0, 204, 106, 0.2); }
+        .floating-element:nth-child(3) { top: 40%; right: 10%; animation-delay: 4s; background: rgba(0, 255, 136, 0.15); }
+        .floating-element:nth-child(4) { bottom: 30%; left: 15%; animation-delay: 6s; background: rgba(0, 204, 106, 0.15); }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) scale(1); 
+                opacity: 0.2; 
+            }
+            50% { 
+                transform: translateY(-30px) scale(1.2); 
+                opacity: 0.4; 
+            }
+        }
+
+        /* MANIFESTO SECTION */
+        .manifesto-section {
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            animation: slideGrid 20s linear infinite;
+        }
+
+        .manifesto-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .manifesto-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00ff88, #ffffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            letter-spacing: -2px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .manifesto-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .manifesto-text strong {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .revolution-section {
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .revolution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .revolution-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 255, 136, 0.02) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            border-radius: 25px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .revolution-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: spin 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .revolution-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .revolution-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.3));
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .card-description {
+            color: #cccccc;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-impact {
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            border-left: 3px solid #00ff88;
+            font-weight: 600;
+            color: #00ff88;
+        }
+
+        .timeline-section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #00ff88, #00cc6a);
+            transform: translateX(-50%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 10% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.07); }
+            100% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 60%;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 60%;
+        }
+
+        .timeline-content {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            position: relative;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            background: #00ff88;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 5px #0a0a0a, 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -15px;
+            right: auto;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            border-color: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+        }
+
+        .timeline-phase {
+            color: #00ff88;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .founders-section {
+            padding: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founders-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .founders-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .founders-subtitle {
+            font-size: 1.2rem;
+            color: #888888;
+            margin-bottom: 4rem;
+        }
+
+        .founders-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founders-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, #ffffff, #00cc6a, transparent);
+            animation: borderFlow 3s linear infinite;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .founders-story {
+            font-size: 1.3rem;
+            line-height: 2;
+            color: #ffffff;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .founders-story .highlight {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            background: rgba(0, 255, 136, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ff88, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000000;
+            padding: 18px 50px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.3);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer p {
+            color: #666666;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #888888;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.02;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" stitchTiles="stitch"/><feColorMatrix in="SourceGraphic" type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.4"/></svg>');
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .manifesto-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .revolution-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .timeline-item {
+                padding-right: 0;
+                padding-left: 0;
+                justify-content: center;
+            }
+            
+            .timeline-item:nth-child(even) {
+                padding-left: 0;
+            }
+            
+            .timeline-line {
+                display: none;
+            }
+            
+            .timeline-content::before {
+                display: none;
+            }
+            
+            .quote {
+                font-size: 1.5rem;
+            }
+            
+            .quote::before,
+            .quote::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <header>
+        <nav class="container">
+            <div class="logo">NEO</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="" class="active">Our Mission</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Our Vision</h1>
+            <p class="slogan">Out With The Old</p>
+            <p>We set out to reimagine fitness — to make health accessible, seamless, and inspiring for everyone.</p>
+
+            <div class="user-counter-container">        
+                <h2 class="counter-title">NEO INSIDERS</h2>
+                
+                <div class="counter-number" id="userCount">0</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="manifesto-section">
+        <div class="container">
+            <div class="manifesto-content">
+                <h2 class="manifesto-title">THE MANIFESTO</h2>
+                <div class="manifesto-text">
+                    We’re tired of the fitness industry’s broken promises — paying £30+ a month across different apps just to track workouts, nutrition, and sleep. Clunky interfaces, endless subscriptions, and no connection between them. 
+                    <br><br>
+                    Fitness shouldn’t be fragmented, expensive, or frustrating. We decided to change that. 
+                    <br><br>
+                    One app. Everything you need. £4.99.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="revolution-section">
+        <div class="container">
+            <h2 class="section-title">The Revolution</h2>
+            <p class="section-subtitle">Four pillars that will change everything</p>
+            
+            <div class="revolution-grid">
+                <div class="revolution-card">
+                    <div class="card-icon"></div>
+                    <h3 class="card-title">Kill The Subscriptions</h3>
+                    <p class="card-description">No more juggling 5 different apps. No hidden paywalls. No "premium" features locked behind additional costs.</p>
+                    <div class="card-impact">One price. Everything included. Forever.</div>
+                </div>
+                
+                <div class="revolution-card">
+                    <div class="card-icon"></div>
+                    <h3 class="card-title">Design That Doesn't Suck</h3>
+                    <p class="card-description">Every pixel crafted with obsessive attention to detail. Interfaces that flow, not fight you.</p>
+                    <div class="card-impact">Beautiful. Intuitive. Addictive.</div>
+                </div>
+                
+                <div class="revolution-card">
+                    <div class="card-icon"></div>
+                    <h3 class="card-title">True Integration</h3>
+                    <p class="card-description">Your workout affects your nutrition recommendations. Your sleep impacts your recovery. Everything connected.</p>
+                    <div class="card-impact">Holistic health intelligence.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="container">
+            <h2 class="section-title">The Journey</h2>
+            <p class="section-subtitle">From frustration to revolution</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Phase 1</div>
+                        <h3 class="timeline-title">The Problem</h3>
+                        <p class="timeline-description">Downloading our 6th fitness app, paying our 5th subscription, getting frustrated with our 10th terrible interface. Something had to change.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Phase 2</div>
+                        <h3 class="timeline-title">The Vision</h3>
+                        <p class="timeline-description">Two gym-obsessed friends with a crazy dream: create something that would be recognised across the world. The vision was born.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Phase 3</div>
+                        <h3 class="timeline-title">The Building</h3>
+                        <p class="timeline-description">Months of development, testing, refining. Every feature crafted with obsessive attention to detail. No shortcuts, no compromises.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Phase 4</div>
+                        <h3 class="timeline-title">The Revolution</h3>
+                        <p class="timeline-description">Neo is born. One app to rule them all. The fitness industry will never be the same.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="founders-section">
+        <div class="container">
+            <div class="founders-container">
+                <h2 class="founders-title">The Founders</h2>
+                <p class="founders-subtitle">Friends since high school. Dreamers since day one.</p>
+                
+                <div class="founders-card">
+                    <div class="founders-story">
+                        We’ve been friends since high school, went through university together, and always shared the same ambition to create something meaningful with real impact.
+                        <br><br>
+                        Our passion for training and fitness became the spark when we kept hitting the same wall: overpriced apps with clunky design and limited features.
+                        <br><br>
+                        We knew if we felt this frustration, millions of others did too. So we stopped talking about it—and started building.
+                    </div>
+
+                    <div class="founders-story">
+                        After months of focused development, refining every detail without compromise, Neo was born. This is our chance to make a global impact — and we’re only just getting started.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Join The Revolution</h2>
+                <p class="cta-text">Ready to ditch the old way of doing things? Neo is here to transform your fitness journey with everything you need in one beautiful, powerful app.</p>
+                <a href="pricing.html" class="cta-button">Start Your Transformation</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Neo. All rights reserved. Out with the old, in with the Neo.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Revolution cards hover effects
+        document.querySelectorAll('.revolution-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.03)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Timeline scroll animations
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(50px) scale(0.9)';
+            item.style.transition = `opacity 0.8s ease ${index * 0.2}s, transform 0.8s ease ${index * 0.2}s`;
+            timelineObserver.observe(item);
+        });
+
+        // Revolution cards stagger animation
+        const revolutionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.revolution-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            revolutionObserver.observe(card);
+        });
+
+        // Manifesto text typing effect
+        const manifestoText = document.querySelector('.manifesto-text');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        manifestoText.style.opacity = '0';
+        manifestoText.style.transform = 'translateY(30px)';
+        manifestoText.style.transition = 'opacity 1s ease 0.5s, transform 1s ease 0.5s';
+        observer.observe(manifestoText);
+
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            document.querySelectorAll('.floating-element').forEach((element, index) => {
+                const speed = (index + 1) * 0.1;
+                element.style.transform = `translateY(${rate * speed}px)`;
+            });
+        });
+
+        // Dynamic background elements
+        function createFloatingParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = Math.random() * 4 + 1 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.backgroundColor = `rgba(0, 255, 136, ${Math.random() * 0.2 + 0.05})`;
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '100vh';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1';
+            particle.style.transition = 'transform 8s linear, opacity 8s ease-out';
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.style.transform = `translateY(-120vh) translateX(${(Math.random() - 0.5) * 200}px)`;
+                particle.style.opacity = '0';
+            }, 100);
+            
+            setTimeout(() => {
+                document.body.removeChild(particle);
+            }, 8000);
+        }
+
+        // Create particles periodically
+        setInterval(createFloatingParticle, 3000);
+
+        // Add glow effect to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        ctaButton.addEventListener('mousemove', (e) => {
+            const rect = ctaButton.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ctaButton.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 255, 255, 0.1), transparent 50%), linear-gradient(135deg, #00ff88, #00cc6a)`;
+        });
+
+        ctaButton.addEventListener('mouseleave', () => {
+            ctaButton.style.background = 'linear-gradient(135deg, #00ff88, #00cc6a)';
+        });
+    </script>
+    <script>
+        class UserCounter {
+            constructor() {
+                this.counterElement = document.getElementById('userCount');
+                this.currentCount = 15825847; // starting base users
+                this.init();
+            }
+
+            formatNumber(num) {
+                return num.toLocaleString();
+            }
+
+            animateCountUp(start, end) {
+                const duration = 1000; // 1 second animation
+                const startTime = performance.now();
+                
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Easing function for smooth animation
+                    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                    const current = Math.floor(start + (end - start) * easeOutQuart);
+                    
+                    this.counterElement.textContent = this.formatNumber(current);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+
+            addRandomUsers() {
+                const randomIncrement = Math.floor(Math.random() * 20) + 1; 
+                // between 1–20 new users
+                const newCount = this.currentCount + randomIncrement;
+                
+                this.counterElement.classList.add('animate');
+                this.animateCountUp(this.currentCount, newCount);
+
+                this.currentCount = newCount;
+
+                setTimeout(() => {
+                    this.counterElement.classList.remove('animate');
+                }, 500);
+            }
+
+            init() {
+                // Show initial count
+                this.counterElement.textContent = this.formatNumber(this.currentCount);
+
+                // Add random users every 2–5 seconds
+                const randomInterval = () => {
+                    this.addRandomUsers();
+                    const nextInterval = Math.floor(Math.random() * 3000) + 2000; 
+                    setTimeout(randomInterval, nextInterval);
+                };
+                
+                randomInterval();
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new UserCounter();
+        });
+    </script>
+</body>
+</html>
