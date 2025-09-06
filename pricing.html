@@ -15,10 +15,24 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       line-height: 1.6;
       color: #ffffff;
-      background: #0a0a0a;
+      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
+
+    body::before {
+      content: '';
+      position: fixed; /* stick to the viewport */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover no-repeat;
+      pointer-events: none;
+      z-index: -1; /* push it behind content */
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -87,22 +101,13 @@
       width: 100%;
     }
     .pricing-hero {
+      min-height: 100vh;
       padding: 140px 0 80px;
       text-align: center;
-      background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
       position: relative;
       overflow: hidden;
     }
-    .pricing-hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" style="stop-color:rgba(0,255,136,0.03)"/><stop offset="100%" style="stop-color:rgba(0,255,136,0)"/></radialGradient></defs><circle cx="300" cy="200" r="120" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; 400,300; 0,0" dur="20s" repeatCount="indefinite"/></circle><circle cx="700" cy="600" r="100" fill="url(%23a)"><animateTransform attributeName="transform" type="translate" values="0,0; -300,200; 0,0" dur="25s" repeatCount="indefinite"/></circle></svg>') center/cover;
-      pointer-events: none;
-    }
+
     .pricing-hero h1 {
       font-size: 4rem;
       font-weight: 900;
@@ -117,7 +122,53 @@
       margin: 0 auto 3rem;
       line-height: 1.7;
     }
+
+     .features-hero p {
+          font-size: 1.2rem;
+          color: #aaaaaa;
+          max-width: 600px;
+          margin: 0 auto 3rem;
+          line-height: 1.7;
+      }
+
+      .feature-nav {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          margin-top: 5rem;
+          flex-wrap: wrap;
+      }
+
+      .feature-nav-item {
+          padding: 12px 24px;
+          background: rgba(255, 255, 255, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 50px;
+          color: #888888;
+          text-decoration: none;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          user-select: none;
+          min-width: 20%;
+      }
+
+      .feature-nav-item:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: #cccccc;
+          border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .feature-nav-item.active {
+          background: linear-gradient(135deg, #00ff88, #00cc6a);
+          color: #ffffff;
+          border-color: transparent;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+      }
+
 .billing-toggle {
+  margin-top: 4rem;
   display: flex;
   justify-content: center; /* centres the toggle-wrapper */
   position: relative;
@@ -200,16 +251,17 @@
       padding-bottom: 80px;
     }
     .pricing-card {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(20px);
-      border-radius: 25px;
-      padding: 3rem 2.5rem;
+      border-radius: 22px;
+      padding: 2.7rem 2.25rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
       transition: all 0.4s ease;
       cursor: pointer;
       position: relative;
       overflow: hidden;
       text-align: left;
+      transform: scale(0.9);
     }
     .pricing-card::before {
       content: '';
@@ -225,15 +277,15 @@
       left: 100%;
     }
     .pricing-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      background: rgba(255, 255, 255, 0.04);
+      transform: translateY(-10px) scale(0.95);
+      background: rgba(255, 255, 255, 0.2);
       border-color: rgba(0, 255, 136, 0.2);
       box-shadow: 0 25px 50px rgba(0, 255, 136, 0.1);
     }
     .pricing-card.featured {
       border-color: rgba(0, 255, 136, 0.3);
-      background: rgba(0, 255, 136, 0.02);
-      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(0.95);
     }
     .pricing-card.featured::after {
       content: 'Most Popular';
@@ -251,7 +303,8 @@
       letter-spacing: 1px;
     }
     .pricing-card.featured:hover {
-      transform: translateY(-10px) scale(1.07);
+      transform: translateY(-10px) scale(1.01);
+      background: rgba(255, 255, 255, 0.2);
     }
     .plan-header {
       margin-bottom: 2rem;
@@ -356,7 +409,6 @@
     }
     .faq-section {
       padding: 80px 0;
-      background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
       border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     .faq-title {
@@ -372,7 +424,7 @@
       gap: 1.5rem;
     }
     .faq-item {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.2);
       border-radius: 15px;
       padding: 2rem;
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -398,10 +450,10 @@
       <a href="#" class="logo">NEO</a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing" class="active">Pricing</a></li>
-        <li><a href="#download">Download</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="ourMission.html">Our Mission</a></li>
+        <li><a href="pricing.html" class="active">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -410,7 +462,14 @@
     <div class="container">
       <h1>Simple, Transparent Pricing</h1>
       <p>Choose the perfect plan for your fitness journey. Start free, upgrade anytime. No hidden fees, no commitments.</p>
-        <div class="billing-toggle">
+        <div class="feature-nav">
+                <a href="#" class="feature-nav-item active" data-feature="pricing">Learn More</a>
+        </div>
+    </div>
+  </section>
+
+  <section class="container" id="pricing">
+    <div class="billing-toggle">
         <div class="toggle-wrapper">
             <div class="toggle-container">
             <div class="toggle-slider" id="toggleSlider"></div>
@@ -420,10 +479,6 @@
             <div class="savings-badge" id="savingsBadge">Save 30%</div>
         </div>
         </div>
-    </div>
-  </section>
-
-  <section class="container">
     <div class="pricing-grid">
       <!-- Starter -->
       <div class="pricing-card">
@@ -451,9 +506,9 @@
           <p class="plan-description">Advanced features for serious fitness enthusiasts</p>
         </div>
         <div class="price-container">
-          <span class="price" data-monthly="$9.99" data-yearly="$83.99">$9.99</span>
+          <span class="price" data-monthly="£9.99" data-yearly="£83.99">£9.99</span>
           <span class="price-period">/month</span>
-          <span class="original-price" data-yearly="$119.88"></span>
+          <span class="original-price" data-yearly="£119.88"></span>
         </div>
         <ul class="features-list">
           <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>Unlimited workout plans</li>
@@ -471,9 +526,9 @@
           <p class="plan-description">All-in-one experience for professionals & trainers</p>
         </div>
         <div class="price-container">
-          <span class="price" data-monthly="$19.99" data-yearly="$167.99">$19.99</span>
+          <span class="price" data-monthly="£19.99" data-yearly="£167.99">£19.99</span>
           <span class="price-period">/month</span>
-          <span class="original-price" data-yearly="$239.88"></span>
+          <span class="original-price" data-yearly="£239.88"></span>
         </div>
         <ul class="features-list">
           <li><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00ff88" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>All Pro features</li>
@@ -585,5 +640,28 @@
       });
     });
   </script>
+  <script>
+      const featureButtons = document.querySelectorAll('.feature-nav-item');
+
+      featureButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault(); // Prevent default anchor behaviour
+
+          // Remove active class from all buttons
+          featureButtons.forEach(btn => btn.classList.remove('active'));
+
+          // Add active class to the clicked button
+          button.classList.add('active');
+
+          // Scroll to the corresponding section
+          const feature = button.dataset.feature;
+          const section = document.getElementById(feature);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+  </script>
+
 </body>
 </html>
